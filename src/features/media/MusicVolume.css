@@ -1,0 +1,73 @@
+/* Output volume under the music: a quiet row, not a second progress bar to compete with. */
+.music-volume {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 0 0 auto;
+  min-width: 0;
+  color: var(--text-3);
+  font-size: calc(11px * var(--island-font-scale, 1));
+  font-variant-numeric: tabular-nums;
+}
+
+.music-volume__icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.music-volume__icon:hover {
+  color: var(--text-1);
+}
+
+/* A taller strip than the bar to aim at, without taking more room. */
+.music-volume__hit {
+  position: relative;
+  flex: 1;
+  margin: -6px 0;
+  padding: 6px 0;
+  outline: none;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.music-volume__track {
+  position: relative;
+  height: 3px;
+  overflow: hidden;
+  background: var(--color-white-a12);
+  border-radius: var(--radius-pill);
+}
+
+.music-volume__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--music-volume, 0%);
+  background: var(--text-2);
+  border-radius: inherit;
+  corner-shape: inherit;
+  transition: width 90ms linear;
+}
+
+/* While dragging, the level is the pointer's: no easing between two of its readings. */
+.music-volume--dragging .music-volume__fill {
+  transition: none;
+}
+
+.music-volume__value {
+  flex: 0 0 auto;
+  min-width: 3ch;
+  color: var(--text-3);
+  text-align: right;
+}
+
+.music-volume__hit:focus-visible .music-volume__track {
+  box-shadow: 0 0 0 1px var(--color-accent);
+}

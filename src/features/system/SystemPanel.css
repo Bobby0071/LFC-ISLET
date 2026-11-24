@@ -1,0 +1,94 @@
+.system-panel {
+  display: grid;
+  gap: var(--space-lg);
+  padding: var(--space-md) 2px;
+}
+
+/* Same top edge as the readings: the status line takes the first row's place. */
+.system-panel--empty {
+  align-content: start;
+  color: var(--text-2);
+  font-size: calc(12px * var(--island-font-scale, 1));
+}
+
+.system-meter {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.system-meter__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.system-meter__label {
+  color: var(--text-2);
+  font-size: calc(12px * var(--island-font-scale, 1));
+}
+
+.system-meter__value {
+  color: var(--text-1);
+  font-size: calc(13px * var(--island-font-scale, 1));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.system-meter__track {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white-a10);
+  overflow: hidden;
+}
+
+.system-meter__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--text-1);
+  /* The island's critically damped spring, so a new reading never overshoots its bar. */
+  transition: width 260ms var(--island-spring-close, ease-out);
+}
+
+/* A bar that looks the same at 5% and 95% makes the reader parse the number;
+   the hue answers "should I care". The figure itself stays in the ink colour. */
+.system-meter__fill[data-level="warm"] {
+  background: var(--color-warning);
+}
+
+.system-meter__fill[data-level="high"] {
+  background: var(--color-danger);
+}
+
+.system-meter__detail {
+  color: var(--text-2);
+  font-size: calc(11px * var(--island-font-scale, 1));
+  font-variant-numeric: tabular-nums;
+}
+
+.system-panel__rates {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.system-rate {
+  display: grid;
+  gap: 2px;
+}
+
+.system-rate__label {
+  color: var(--text-2);
+  font-size: calc(11px * var(--island-font-scale, 1));
+}
+
+.system-rate__value {
+  color: var(--text-1);
+  font-size: calc(13px * var(--island-font-scale, 1));
+  font-variant-numeric: tabular-nums;
+}
+
+/* It has to be noticed; secondary grey at 11px was not. */
+.system-panel__warning {
+  color: var(--color-warning);
+  font-size: calc(11px * var(--island-font-scale, 1));
+}
