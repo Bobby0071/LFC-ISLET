@@ -154,6 +154,15 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* The island's own open/close keeps its full duration (IslandShell.css, 2026-11-13);
+   the rows inside it are ordinary content and answer to the system setting. */
+@media (prefers-reduced-motion: reduce) {
+  .island__active-task,
+  .island__agent-session {
+    animation: none;
+  }
+}
+
 .island__quiet-button {
   position: relative;
   width: 12px;
