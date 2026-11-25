@@ -262,7 +262,7 @@
   border-top: 1px solid var(--translation-border);
 }
 .translation-window__footer-info { min-width: 0; flex: 1; color: var(--translation-muted); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
-.translation-window__error { color: #ffb4b8; }
+.translation-window__error { color: var(--color-error-text); }
 .translation-window__setup { padding: 0; color: var(--translation-accent); background: transparent; border: 0; text-align: left; }
 .translation-window__setup:hover { text-decoration: underline; }
 .translation-window__primary {

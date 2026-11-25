@@ -113,7 +113,7 @@
 .media-notice__inline-action:disabled { opacity: 0.55; cursor: default; }
 
 .media-notice__muted,
-.media-notice__hint { color: var(--text-3); font-size: 11px; }
+.media-notice__hint { color: var(--text-3); font-size: calc(11px * var(--island-font-scale, 1)); }
 
 .media-notice__feedback {
   display: flex;

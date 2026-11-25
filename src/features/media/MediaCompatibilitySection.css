@@ -13,7 +13,7 @@
   margin-top: 2px;
 }
 
-.media-compat__feedback--error { color: #ff8a9a; }
+.media-compat__feedback--error { color: var(--color-error-text); }
 .media-compat__feedback--status { color: var(--color-text); }
 
 .media-compat__action,
