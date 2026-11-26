@@ -75,8 +75,12 @@ async function checkColorInputs(check: (condition: unknown, message: string) => 
   } finally {
     window.removeEventListener("keydown", onWindowKey);
   }
+  const beforeInvalid = { saved: saved(), shown: element(".appearance-hex").textContent };
   await edit("not a color", "Enter");
-  check(saved() === "#2F2F37" && element(".appearance-hex").textContent === "#2F2F37", "Invalid hex input silently rolls back");
+  // The swatch label resolves the persisted colour through the active scheme (light shows
+  // #FBFBFD for the saved #2F2F37), so compare against what was on screen before the edit.
+  check(saved() === beforeInvalid.saved && element(".appearance-hex").textContent === beforeInvalid.shown,
+    "Invalid hex input silently rolls back");
   await edit("123456", "Enter");
   const swatches = [...document.querySelectorAll<HTMLInputElement>(".settings-color__swatch")];
   await type(swatches[1], "#aabbcc");
