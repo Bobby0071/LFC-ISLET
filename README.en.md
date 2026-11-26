@@ -15,7 +15,7 @@
   <p>English · <a href="README.md">中文</a></p>
 </div>
 
-> **This is a GPL-3.0 fork of [fly-island](https://github.com/flyl1u/fly-island)** by [@flyl1u](https://github.com/flyl1u). LFC-ISLET changes the branding and appearance on top of that codebase and stays open source under the same license. The upstream author is not responsible for this fork; please report issues here rather than upstream.
+> **This is a GPL-3.0 fork of [fly-island](https://github.com/flyl1u/fly-island)** by [@flyl1u](https://github.com/flyl1u). LFC-ISLET has been modified from upstream v3.2.5 since 2026-11-16, changing the branding and appearance on top of that codebase and staying open source under the same license. The upstream author is not responsible for this fork; please report issues here rather than upstream.
 
 ## What is this?
 
