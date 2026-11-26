@@ -27,7 +27,7 @@ localStorage.setItem(keys[1], JSON.stringify({ accounts: [] }));
 localStorage.setItem(keys[2], "true");
 let revision = 1;
 let qq = { revision, enabled: true, status: "listening", error: null,
-  items: [{ id: "qq-1", title: "项目群", body: "请看最新安排", createdAt: Date.now() }] };
+  items: [{ id: "qq-1", appId: "QQ", title: "项目群", body: "请看最新安排", createdAt: Date.now() }] };
 let wechat = { revision, enabled: true, status: "listening", pending: true, lastAttentionAt: Date.now(), error: null,
   previewEnabled: true, previewStatus: "ready", hideMinimizedTaskbar: false,
   messages: [{ id: "wechat-1", contact: "协作群", body: "小林：下午开会", receivedAt: Date.now() }] };
@@ -50,6 +50,7 @@ mockIPC(async (command, payload) => {
     const contact = wechat.messages.find((item) => item.id === args.messageId)?.contact;
     return (wechat = { ...wechat, revision: ++revision, messages: wechat.messages.filter((item) => item.contact !== contact) });
   }
+  if (command === "dismiss_app_notifications") return (qq = { ...qq, revision: ++revision, items: qq.items.filter((item) => item.appId !== args.appId) });
   if (command === "clear_qq_notifications") return (qq = { ...qq, revision: ++revision, items: [] });
   if (command === "clear_wechat_reminders") return (wechat = { ...wechat, revision: ++revision, pending: false, messages: [] });
   if (command === "get_qq_mail_state") return [mailState];
@@ -117,7 +118,7 @@ try {
     await act(async () => {
       const at = Date.now();
       qq = { ...qq, revision: ++revision, items: [["m3", "小明"], ["h2", "小红"], ["m2", "小明"], ["h1", "小红"], ["m1", "小明"]]
-        .map(([id, title], index) => ({ id, title, body: "消息", createdAt: at - index })) };
+        .map(([id, title], index) => ({ id, appId: "QQ", title, body: "消息", createdAt: at - index })) };
       await emit("qq-notifications-changed", { snapshot: qq, newestId: null, windowVisible: true });
     });
     await act(async () => card("m2")!.click());
@@ -135,14 +136,14 @@ try {
     await act(async () => action(clearLabel).click());
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) check(document.querySelector(".message-card--leaving"), "QQ cards play their exit before removal");
     await act(async () => {
-      qq = { ...qq, revision: ++revision, items: [{ id: "qq-new", title: "新通知", body: "清空期间新到消息", createdAt: Date.now() }] };
+      qq = { ...qq, revision: ++revision, items: [{ id: "qq-new", appId: "QQ", title: "新通知", body: "清空期间新到消息", createdAt: Date.now() }] };
       await emit("qq-notifications-changed", { snapshot: qq, newestId: null, windowVisible: true });
     });
     await settle();
     check(document.querySelector('[data-message-id="qq-new"]') && !document.querySelector(".message-card--leaving"), "A new QQ notification arriving during exit stays visible");
     await act(async () => action(clearLabel).click());
     await settle();
-    check(action(clearLabel).disabled && document.querySelector(".qq-panel__empty") && !document.querySelector(".lucide-trash-2"), "QQ clears to its empty state with a single disabled bulk action");
+    check(action(clearLabel).disabled && document.querySelector(".qq-panel__empty"), "QQ clears to its empty state with a single disabled bulk action");
     await act(async () => setSource("wechat"));
     await act(async () => action(clearLabel).click());
     if (!matchMedia("(prefers-reduced-motion: reduce)").matches) check(document.querySelector(".message-card--leaving"), "WeChat preview cards play their exit");

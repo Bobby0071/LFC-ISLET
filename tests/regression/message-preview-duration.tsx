@@ -45,7 +45,7 @@ const root = createRoot(document.getElementById("root")!);
 const render = () => act(async () => root.render(<I18nProvider><Fixture /></I18nProvider>));
 async function notify() {
   await act(async () => {
-    await emit("qq-notifications-changed", { snapshot: { revision: ++revision, enabled: true, status: "listening", items: [{ id: String(now), title: "QQ", body: "test", createdAt: now }], error: null }, newestId: String(now), windowVisible: true });
+    await emit("qq-notifications-changed", { snapshot: { revision: ++revision, enabled: true, status: "listening", items: [{ appId: "QQ", appName: "QQ", id: String(now), title: "QQ", body: "test", createdAt: now }], error: null }, newestId: String(now), windowVisible: true });
     await emit("wechat-reminder-changed", { snapshot: wechat(true), windowVisible: true });
     await emit("qq-mail-changed", { snapshot: mail(String(now)), newestId: String(now), windowVisible: true });
   });

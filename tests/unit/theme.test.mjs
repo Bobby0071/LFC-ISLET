@@ -9,6 +9,7 @@ test("the colour scheme defaults to light and rejects unknown saved values", () 
     assert.equal(normalizeSettings({ colorScheme: value }).colorScheme, "light");
   }
   assert.equal(normalizeSettings({ colorScheme: "light" }).colorScheme, "light");
+  assert.equal(normalizeSettings({ colorScheme: "dark" }).colorScheme, "dark");
   assert.equal(normalizeSettings({ colorScheme: "system" }).colorScheme, "system");
 });
 

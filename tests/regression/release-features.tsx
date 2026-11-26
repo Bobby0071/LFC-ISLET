@@ -27,10 +27,10 @@ function check(condition: unknown, label: string) {
 }
 const root = createRoot(document.getElementById("fixture")!);
 try {
-  check(!PLUGINS_ENABLED && !MAIL_OTP_ENABLED, "正式构建的两个开关关闭");
+  check(PLUGINS_ENABLED && !MAIL_OTP_ENABLED, "本分支开启插件系统、关闭邮件验证码自动复制");
   await act(async () => root.render(<StrictMode><I18nProvider><Probe /></I18nProvider></StrictMode>));
   await act(async () => { await refreshPlugins(); });
-  check(calls.length === 0, "岛上挂载插件消费者不会请求宿主、索引或订阅事件");
+  check(!calls.includes("copy_mail_otp"), "启用插件后也不会顺带调用邮件验证码复制");
   check(document.querySelector("output")?.textContent?.includes('"installed":{}'), "插件快照为空，不产生会话、额度和消息入口");
   const event: MailEvent = {
     snapshot: { email: "test@example.com", configured: true, enabled: true, syncing: false,

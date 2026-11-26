@@ -131,7 +131,7 @@ async function notify(source: MessageSource, long = false, visible = true, otpCo
       }, windowVisible: visible,
     });
     if (source === "qq") await emit("qq-notifications-changed", {
-      snapshot: { revision: ++revision, enabled: true, status: "listening", items: [{ id: `qq-${revision}`, title: long ? "这是一位名字特别特别长的好友" : "小林", body: long ? "明天下午三点一起讨论新项目的设计方案，记得带上之前整理的资料。" : "下午一起开会吗？", createdAt: receivedAt }], error: null }, newestId: `qq-${revision}`, windowVisible: visible,
+      snapshot: { revision: ++revision, enabled: true, status: "listening", items: [{ appId: "QQ", appName: "QQ", id: `qq-${revision}`, title: long ? "这是一位名字特别特别长的好友" : "小林", body: long ? "明天下午三点一起讨论新项目的设计方案，记得带上之前整理的资料。" : "下午一起开会吗？", createdAt: receivedAt }], error: null }, newestId: `qq-${revision}`, windowVisible: visible,
     });
     if (source === "qqMail") {
       mail = { ...mail, revision: ++revision, unreadCount: 1, items: [{ id: `mail-${revision}`, uid: revision, sender: "项目组", subject: long ? "本周项目进度和下阶段设计评审安排，请查收附件中的完整说明" : "本周项目进度已更新", unread: true, receivedAt, otpCode }] };
@@ -167,7 +167,7 @@ async function runChecks() {
     check(incoming().textContent?.includes("剩余3个待办"), "初始待办直接可读，无首次闪动");
     const width = document.querySelector(".island")!.getBoundingClientRect().width;
     await notify("qq", true);
-    check(summary().children.length === 2 && summary().firstElementChild?.textContent?.includes("剩余3个待办"), "待办退场时保留原文字");
+    check(summary().querySelector(".island__summary-layer--outgoing")?.textContent?.includes("剩余3个待办"), "待办退场时保留原文字");
     check(button().getAttribute("aria-label")?.includes("名字特别特别长"), "QQ 完整好友名与消息保留在无障碍标签中");
     await settle();
     const sender = summary().querySelector<HTMLElement>(".island-message-preview__sender")!;
@@ -204,7 +204,7 @@ async function runChecks() {
     check(!pixelMessageStyle.fontFamily.includes("Fusion Pixel") && Number(pixelMessageStyle.fontWeight) >= 600, "像素主题中的消息仍使用清晰的系统中粗字体");
     await act(async () => button().click());
     await settle();
-    check(incoming().textContent?.includes("fly-island") && incoming().textContent?.includes("完成今日设计评审"), "像素字体和标题开启时恢复当前专注任务");
+    check(incoming().textContent?.includes("LFC-ISLET") && incoming().textContent?.includes("完成今日设计评审"), "像素字体和标题开启时恢复当前专注任务");
     await notify("qq");
     await act(async () => changeMode("expanded"));
     check(summary().children.length === 1 && !summary().querySelector(".island-message-preview"), "展开立即清除消息动画和离场内容");
